@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Device - Khalvian Tech Hub{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">{{ action }} Device</h2>
+                    <a href="{% url 'device_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </a>
+                </div>
+                {% if action == 'Delete' %}
+                <div class="card border-0 shadow-sm p-4 text-center">
+                    <i class="bi bi-trash text-danger mb-3" style="font-size: 4rem;"></i>
+                    <h3 class="fw-bold mb-3">Delete Device</h3>
+                    <p class="text-muted mb-4">
+                        Are you sure you want to delete <strong>{{ device.name }}</strong>?
+                        This action cannot be undone.
+                    </p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex gap-3 justify-content-center">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-trash"></i> Yes, Delete
+                            </button>
+                            <a href="{% url 'device_list' %}" class="btn btn-outline-secondary btn-lg">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+                {% else %}
+                <div class="card border-0 shadow-sm p-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Device Name</label>
+                            <input type="text" name="name" class="form-control"
+                                   value="{{ form.instance.name }}" placeholder="Device Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Device ID</label>
+                            <input type="text" name="device_id" class="form-control"
+                                   value="{{ form.instance.device_id }}" placeholder="Unique Device ID" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">IP Address</label>
+                            <input type="text" name="ip_address" class="form-control"
+                                   value="{{ form.instance.ip_address }}" placeholder="192.168.1.1">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Metadata (JSON)</label>
+                            <textarea name="metadata" class="form-control" rows="4"
+                                      placeholder='{"key": "value"}'>{{ form.instance.metadata }}</textarea>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-save"></i> {{ action }} Device
+                            </button>
+                            <a href="{% url 'device_list' %}" class="btn btn-outline-secondary btn-lg">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

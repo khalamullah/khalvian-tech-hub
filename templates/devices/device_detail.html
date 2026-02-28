@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ device.name }} - Khalvian Tech Hub{% endblock %}
+
+{% block device_id %}{{ device.device_id }}{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">{{ device.name }}</h2>
+                    <a href="{% url 'device_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </a>
+                </div>
+
+                <!-- Live Status Card -->
+                <div class="card border-0 shadow-sm p-4 mb-4 border-start border-primary border-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h5 class="fw-bold mb-1">Live Device Status</h5>
+                            <small class="text-muted">Updates in real-time via WebSocket</small>
+                        </div>
+                        <div class="text-end">
+                            <span id="device-status"
+                                class="badge {% if device.status == 'online' %}bg-success{% elif device.status == 'offline' %}bg-danger{% else %}bg-warning{% endif %} fs-6">
+                                {{ device.status|capfirst }}
+                            </span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <small class="text-muted">Last Seen</small>
+                            <p id="device-last-seen" class="fw-bold mb-0">
+                                {{ device.last_seen|default:"Never" }}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <small class="text-muted">Connection</small>
+                            <p class="fw-bold mb-0">
+                                <span id="ws-status" class="text-success">
+                                    <i class="bi bi-wifi"></i> WebSocket Active
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Simulate Status Buttons -->
+                    <div class="mt-3">
+                        <small class="text-muted d-block mb-2">Simulate Status Change:</small>
+                        <div class="d-flex gap-2">
+                            <button onclick="window.deviceSocket.sendStatus('online')"
+                                    class="btn btn-sm btn-success">
+                                <i class="bi bi-wifi"></i> Set Online
+                            </button>
+                            <button onclick="window.deviceSocket.sendStatus('idle')"
+                                    class="btn btn-sm btn-warning">
+                                <i class="bi bi-pause-circle"></i> Set Idle
+                            </button>
+                            <button onclick="window.deviceSocket.sendStatus('offline')"
+                                    class="btn btn-sm btn-danger">
+                                <i class="bi bi-wifi-off"></i> Set Offline
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Device Info Card -->
+                <div class="card border-0 shadow-sm p-4 mb-4">
+                    <h5 class="fw-bold mb-3">Device Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="text-muted small">Device Name</label>
+                            <p class="fw-bold">{{ device.name }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small">Device ID</label>
+                            <p><code>{{ device.device_id }}</code></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small">IP Address</label>
+                            <p class="fw-bold">{{ device.ip_address|default:"Not set" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small">Owner</label>
+                            <p class="fw-bold">{{ device.user.username }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small">Created</label>
+                            <p class="fw-bold">{{ device.created_at|date:"M d, Y" }}</p>
+                        </div>
+                        {% if device.metadata %}
+                        <div class="col-12">
+                            <label class="text-muted small">Metadata</label>
+                            <pre class="bg-light p-3 rounded"><code>{{ device.metadata }}</code></pre>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'device_edit' device.pk %}" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i> Edit Device
+                    </a>
+                    <a href="{% url 'device_delete' device.pk %}" class="btn btn-outline-danger">
+                        <i class="bi bi-trash"></i> Delete Device
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

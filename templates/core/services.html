@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Services - Khalvian Tech Hub{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold">Our Services</h1>
+            <p class="lead text-muted">Everything you need to manage your technology infrastructure</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <i class="bi bi-hdd-network text-primary mb-3" style="font-size: 2.5rem;"></i>
+                    <h5 class="fw-bold">Device Management</h5>
+                    <p class="text-muted">Register, monitor, and control all your connected devices from a single dashboard. Get real-time status updates and alerts.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <i class="bi bi-cloud-upload text-primary mb-3" style="font-size: 2.5rem;"></i>
+                    <h5 class="fw-bold">File Storage</h5>
+                    <p class="text-muted">Securely upload, store, and manage your files. Download anytime, anywhere with our reliable file management system.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <i class="bi bi-lightning text-primary mb-3" style="font-size: 2.5rem;"></i>
+                    <h5 class="fw-bold">Real-Time Monitoring</h5>
+                    <p class="text-muted">Live WebSocket-powered monitoring of your devices and systems. Instant notifications for any status changes.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <i class="bi bi-shield-lock text-primary mb-3" style="font-size: 2.5rem;"></i>
+                    <h5 class="fw-bold">Role-Based Access</h5>
+                    <p class="text-muted">Secure role-based access control ensures that users only see and manage what they are authorized to access.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <i class="bi bi-code-slash text-primary mb-3" style="font-size: 2.5rem;"></i>
+                    <h5 class="fw-bold">API Access</h5>
+                    <p class="text-muted">Integrate Khalvian Tech Hub with your existing systems using our secure REST API endpoints.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm p-4">
+                    <i class="bi bi-newspaper text-primary mb-3" style="font-size: 2.5rem;"></i>
+                    <h5 class="fw-bold">Blog & CMS</h5>
+                    <p class="text-muted">A built-in content management system for publishing news, updates, and technical articles to your users.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="bg-primary text-white py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Ready to Get Started?</h2>
+        <p class="lead mb-4">Sign up today and experience the power of Khalvian Tech Hub.</p>
+        <a href="{% url 'signup' %}" class="btn btn-light btn-lg">
+            <i class="bi bi-rocket"></i> Create Free Account
+        </a>
+    </div>
+</section>
+{% endblock %}

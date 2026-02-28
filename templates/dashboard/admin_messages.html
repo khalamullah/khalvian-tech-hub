@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Messages - Khalvian Tech Hub{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Contact Messages</h2>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                {% if contact_messages %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for msg in contact_messages %}
+                            <tr>
+                                <td><strong>{{ msg.name }}</strong></td>
+                                <td>{{ msg.email }}</td>
+                                <td>{{ msg.subject }}</td>
+                                <td>{{ msg.message|truncatewords:10 }}</td>
+                                <td>{{ msg.submitted_at|date:"M d, Y" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-envelope text-muted" style="font-size: 3rem;"></i>
+                    <p class="text-muted mt-2">No messages yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - Khalvian Tech Hub{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="card border-0 shadow-sm p-4">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-person-circle text-primary" style="font-size: 4rem;"></i>
+                        <h2 class="fw-bold mt-2">{{ user.get_full_name|default:user.username }}</h2>
+                        <span class="badge bg-primary">{{ user.role|capfirst }}</span>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">First Name</label>
+                                <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Last Name</label>
+                                <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Email Address</label>
+                            <input type="email" name="email" class="form-control" value="{{ user.email }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Bio</label>
+                            <textarea name="bio" class="form-control" rows="4" placeholder="Tell us about yourself...">{{ user.bio }}</textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Avatar</label>
+                            <input type="file" name="avatar" class="form-control">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

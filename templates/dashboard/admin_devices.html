@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}All Devices - Khalvian Tech Hub{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">All Devices</h2>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Device ID</th>
+                                <th>Owner</th>
+                                <th>Status</th>
+                                <th>IP Address</th>
+                                <th>Last Seen</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for device in devices %}
+                            <tr>
+                                <td><strong>{{ device.name }}</strong></td>
+                                <td><code>{{ device.device_id }}</code></td>
+                                <td>{{ device.user.username }}</td>
+                                <td>
+                                    {% if device.status == 'online' %}
+                                    <span class="badge bg-success">Online</span>
+                                    {% elif device.status == 'offline' %}
+                                    <span class="badge bg-danger">Offline</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">Idle</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ device.ip_address|default:"-" }}</td>
+                                <td>{{ device.last_seen|default:"Never" }}</td>
+                                <td>
+                                    <a href="{% url 'device_detail' device.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+                                    <a href="{% url 'device_edit' device.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

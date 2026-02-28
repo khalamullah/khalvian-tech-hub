@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Khalvian Tech Hub{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Admin Dashboard</h2>
+            <span class="badge bg-danger fs-6">Administrator</span>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4">
+                    <i class="bi bi-people text-primary mb-2" style="font-size: 2.5rem;"></i>
+                    <h2 class="fw-bold">{{ user_count }}</h2>
+                    <p class="text-muted mb-0">Total Users</p>
+                    <a href="{% url 'admin_users' %}" class="btn btn-sm btn-outline-primary mt-3">Manage</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4">
+                    <i class="bi bi-hdd-network text-success mb-2" style="font-size: 2.5rem;"></i>
+                    <h2 class="fw-bold">{{ device_count }}</h2>
+                    <p class="text-muted mb-0">Total Devices</p>
+                    <a href="{% url 'admin_devices' %}" class="btn btn-sm btn-outline-success mt-3">Manage</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4">
+                    <i class="bi bi-file-earmark text-warning mb-2" style="font-size: 2.5rem;"></i>
+                    <h2 class="fw-bold">{{ file_count }}</h2>
+                    <p class="text-muted mb-0">Total Files</p>
+                    <a href="{% url 'file_list' %}" class="btn btn-sm btn-outline-warning mt-3">View</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4">
+                    <i class="bi bi-envelope text-danger mb-2" style="font-size: 2.5rem;"></i>
+                    <h2 class="fw-bold">{{ messages_count }}</h2>
+                    <p class="text-muted mb-0">Unread Messages</p>
+                    <a href="{% url 'admin_messages' %}" class="btn btn-sm btn-outline-danger mt-3">View</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <h4 class="fw-bold mb-3">Quick Actions</h4>
+        <div class="row g-3 mb-5">
+            <div class="col-md-3">
+                <a href="{% url 'post_create' %}" class="btn btn-primary w-100 py-3">
+                    <i class="bi bi-pencil-square"></i> New Blog Post
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'admin_users' %}" class="btn btn-success w-100 py-3">
+                    <i class="bi bi-people"></i> Manage Users
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'admin_messages' %}" class="btn btn-warning w-100 py-3">
+                    <i class="bi bi-envelope"></i> View Messages
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'admin_devices' %}" class="btn btn-secondary w-100 py-3">
+                    <i class="bi bi-hdd-network"></i> All Devices
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Recent Users -->
+            <div class="col-md-6">
+                <h4 class="fw-bold mb-3">Recent Users</h4>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for u in recent_users %}
+                                    <tr>
+                                        <td>{{ u.username }}</td>
+                                        <td>{{ u.email }}</td>
+                                        <td>
+                                            {% if u.role == 'admin' %}
+                                            <span class="badge bg-danger">Admin</span>
+                                            {% else %}
+                                            <span class="badge bg-primary">User</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Devices -->
+            <div class="col-md-6">
+                <h4 class="fw-bold mb-3">Recent Devices</h4>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>User</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for device in recent_devices %}
+                                    <tr>
+                                        <td>{{ device.name }}</td>
+                                        <td>{{ device.user.username }}</td>
+                                        <td>
+                                            {% if device.status == 'online' %}
+                                            <span class="badge bg-success">Online</span>
+                                            {% elif device.status == 'offline' %}
+                                            <span class="badge bg-danger">Offline</span>
+                                            {% else %}
+                                            <span class="badge bg-warning">Idle</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
