@@ -5,7 +5,7 @@ import os
 DEBUG = False
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://localhost').split(',')
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://web-production-81049.up.railway.app').split(',')
 
 # ─── Database ─────────────────────────────────────────────
 DATABASES = {
